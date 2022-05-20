@@ -47,7 +47,7 @@ class Organization(models.Model):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=254, primary_key=True)
+    email = models.EmailField(max_length=254, unique=True)
     password = models.CharField(max_length=30)
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
 
@@ -55,7 +55,20 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['password']
-    USER_ID_FIELD = 'email'
 
     def __str__(self):
         return self.email
+
+    @property
+    def is_staff(self):
+        return True
+
+
+class Document(models.Model):
+    filename = models.FileField(null=True, blank=True)
+    organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.filename

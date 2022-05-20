@@ -5,5 +5,6 @@ from . import views
 
 urlpatterns = [
     path('login/', rest_framework_views.obtain_auth_token),
-    path('logout/', views.user_logout)
+    path('logout/', views.user_logout),
+    path('file/', views.file)
 ]
