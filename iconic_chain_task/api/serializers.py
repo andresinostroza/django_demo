@@ -1,15 +1,27 @@
 from rest_framework import serializers
 
-from iconic_chain_task.api.models import Document, Organization
+from iconic_chain_task.api.models import IconicFile, IconicFileDownloadLog, Organization, User
 
 
-class DocumentSerializer(serializers.ModelSerializer):
+class IconicFileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Document
-        fields = ['id', 'filename', 'organization', 'user', 'created_at']
+        model = IconicFile
+        fields = ['id', 'file', 'organization', 'user', 'created_at']
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
         fields = ['id', 'name']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'organization']
+
+
+class IconicFileDownloadLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IconicFileDownloadLog
+        fields = ['id', 'file', 'organization', 'user', 'created_at']
