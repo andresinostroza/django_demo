@@ -73,6 +73,10 @@ class IconicFile(models.Model):
     def __str__(self):
         return self.file.name
 
+    @property
+    def filename(self):
+        return self.file.name.split('/')[-1]
+
 
 class IconicFileDownloadLog(models.Model):
     file = models.ForeignKey(IconicFile, on_delete=models.PROTECT)

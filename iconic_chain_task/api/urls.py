@@ -9,6 +9,7 @@ urlpatterns = [
     path('file/', views.post_file),
     path('file/<int:file_id>/download', views.get_file),
     path('user/', views.get_users),
+    path('user/<int:user_id>/download-log', views.get_user_downloads),
     path('organization/', views.get_organizations),
     path('organization/<int:organization_id>/files', views.get_files),
 ]

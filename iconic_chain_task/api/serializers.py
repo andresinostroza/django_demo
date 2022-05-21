@@ -4,9 +4,21 @@ from iconic_chain_task.api.models import IconicFile, IconicFileDownloadLog, Orga
 
 
 class IconicFileSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = IconicFile
         fields = ['id', 'file', 'organization', 'user', 'created_at']
+
+    def get_downloads(self, fileId):
+        return IconicFileDownloadLog.objects.filter(file__id=fileId).count()
+
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "filename": instance.filename,
+            "created_at": instance.created_at,
+            "downloads": self.get_downloads(instance.id)
+        }
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
@@ -16,12 +28,23 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    downloads = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id', 'email', 'organization']
+        fields = ['id', 'email', 'organization', 'downloads']
+
+    def get_downloads(self, user):
+        return IconicFileDownloadLog.objects.filter(user__id=user.id).count()
 
 
 class IconicFileDownloadLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = IconicFileDownloadLog
         fields = ['id', 'file', 'organization', 'user', 'created_at']
+
+    def to_representation(self, instance):
+        return {
+            "file_id": instance.file.id,
+            "downloaded_at": instance.created_at,
+        }
