@@ -2,6 +2,6 @@ pre-commit:
   parallel: true
   commands:
     flake8_backend_lint:
-      root: "backend/" # folder of the code
+      root: "iconic_chain_task/"
       glob: "*.py"
       run: flake8 {staged_files} && git add {staged_files}
