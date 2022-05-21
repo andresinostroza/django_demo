@@ -4,21 +4,21 @@
 
 ### Install Python 3.8.X
 
-User the link 
+User the link
 
 https://www.python.org/downloads/release/python-3813/
 
-### Create your virutal environment 
+### Create your virutal environment
 
 ```
 python -m venv env
 ```
 
-### Access to your virutal environment 
+### Access to your virutal environment
 
 
 ```
-source env/bin/activate  
+source env/bin/activate
 ```
 
 ### Install dependencies
@@ -31,7 +31,7 @@ pip install -r requirements.txt
 ### Run initial setup
 ```
 python manage.py makemigrations api
-python manage.py migrate  
+python manage.py migrate
 python manage.py loaddata organization
 python manage.py createsuperuser --email <choose a root email> --password <choose your password>
 ```

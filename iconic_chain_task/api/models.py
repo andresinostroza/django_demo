@@ -1,22 +1,27 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    PermissionsMixin,
+    BaseUserManager,
+)
 
 
 class UserProfileManager(BaseUserManager):
-
     def create_user(self, email, password=None, organization_id=None):
-        """ Create a new user profile """
+        """Create a new user profile"""
         if not email:
-            raise ValueError('User must have an email address')
+            raise ValueError("User must have an email address")
 
         # TODO Refactor to another function, even a class
         if not organization_id:
             default_organization = Organization.objects.first()
             if not default_organization:
-                raise ValueError("Organizations have not been set, "
-                                 "please run: python manage.py loaddata "
-                                 "organization following "
-                                 "the instructions in the README.md file")
+                raise ValueError(
+                    "Organizations have not been set, "
+                    "please run: python manage.py loaddata "
+                    "organization following "
+                    "the instructions in the README.md file"
+                )
         else:
             default_organization = Organization.objects.get(id=organization_id)
 
@@ -29,8 +34,8 @@ class UserProfileManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password):
-        """ Create a new superuser profile """
-        print('Creating root user!')
+        """Create a new superuser profile"""
+        print("Creating root user!")
         user = self.create_user(email, password)
         user.is_superuser = True
 
@@ -53,8 +58,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserProfileManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['password']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["password"]
 
     def __str__(self):
         return self.email
@@ -75,7 +80,7 @@ class IconicFile(models.Model):
 
     @property
     def filename(self):
-        return self.file.name.split('/')[-1]
+        return self.file.name.split("/")[-1]
 
 
 class IconicFileDownloadLog(models.Model):
@@ -85,4 +90,4 @@ class IconicFileDownloadLog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.file.name} has been downloaded by {self.user.email}'
+        return f"{self.file.name} has been downloaded by {self.user.email}"
