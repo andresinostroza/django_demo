@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  commands:
+    flake8_backend_lint:
+      root: "backend/" # folder of the code
+      glob: "*.py"
+      run: flake8 {staged_files} && git add {staged_files}
