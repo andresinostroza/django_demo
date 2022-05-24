@@ -1,48 +1,23 @@
-# Iconic chain -Task
+## I am docker friendly :D let's keep it easy :D
 
-## For local development with no Docker with virtual env
+### initial setup
 
-### Install Python 3.8.X
 
-User the link
+Create a .env file in the root, follow the instructions of =>  https://docs.docker.com/compose/environment-variables/#the-env-file for example:
 
-https://www.python.org/downloads/release/python-3813/
+DJANGO_SUPERUSER_EMAIL=<your-admin-email>
+DJANGO_SUPERUSER_PASSWORD=<your-admin-password>
 
-### Create your virutal environment
-
-```
-python -m venv env
-```
-
-### Access to your virutal environment
-
+This is necessary in order to create new users and organizations using the admin django CRUD
+### run docker build and run using our lovely
 
 ```
-source env/bin/activate
-```
-
-### Install dependencies
-
-```
-pip install -r requirements.txt
-```
-
-
-### Run initial setup
-```
-python manage.py makemigrations api
-python manage.py migrate
-python manage.py loaddata organization
-python manage.py createsuperuser --email <choose a root email> --password <choose your password>
-```
-
-### Run the app
-
-```
-python manage.py runserver
+docker-compose up
 
 ```
 
-## For local development with Docker
+### setup new users or organizations in case you need
 
-### Coming soon
+goto in your browser:
+
+http://0.0.0.0:8090/admin/

@@ -53,7 +53,7 @@ class Organization(models.Model):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
-    password = models.CharField(max_length=30)
+    password = models.CharField(max_length=128)
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
 
     objects = UserProfileManager()

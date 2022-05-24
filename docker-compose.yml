@@ -1,0 +1,27 @@
+version: "2.4"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=iconic_chain
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+  web:
+    build: .
+    restart: always
+    volumes:
+      - .:/code
+    ports:
+      - "8090:8090"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=iconic_chain
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
+    depends_on:
+      - db

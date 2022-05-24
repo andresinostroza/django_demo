@@ -30,6 +30,15 @@ class OrganizationSerializer(serializers.ModelSerializer):
         model = Organization
         fields = ["id", "name"]
 
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "filename": instance.name,
+            "downloads": IconicFileDownloadLog.objects.filter(
+                organization__id=instance.id
+            ).count(),
+        }
+
 
 class UserSerializer(serializers.ModelSerializer):
     downloads = serializers.SerializerMethodField()
