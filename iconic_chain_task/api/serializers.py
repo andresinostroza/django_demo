@@ -47,8 +47,15 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ["id", "email", "organization", "downloads"]
 
-    def get_downloads(self, user):
-        return IconicFileDownloadLog.objects.filter(user__id=user.id).count()
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "email": instance.email,
+            "organization_id": instance.organization.id,
+            "downloads": IconicFileDownloadLog.objects.filter(
+                user__id=instance.id
+            ).count(),
+        }
 
 
 class IconicFileDownloadLogSerializer(serializers.ModelSerializer):

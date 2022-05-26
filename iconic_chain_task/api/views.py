@@ -1,5 +1,5 @@
 from django.contrib.auth import logout
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -44,10 +44,8 @@ def post_file(request):
     serialized_iconic_file = IconicFileSerializer(data=data)
     if serialized_iconic_file.is_valid():
         serialized_iconic_file.save()
-        return JsonResponse(serialized_iconic_file.data, status=status.HTTP_201_CREATED)
-    return JsonResponse(
-        serialized_iconic_file.errors, status=status.HTTP_400_BAD_REQUEST
-    )
+        return Response(serialized_iconic_file.data, status=status.HTTP_201_CREATED)
+    return Response(serialized_iconic_file.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
@@ -57,7 +55,7 @@ def get_files(request, organization_id):
         organization = Organization.objects.get(pk=organization_id)
         files = IconicFile.objects.filter(organization=organization)
         serializeds_files = IconicFileSerializer(files, many=True)
-        return JsonResponse(serializeds_files.data, safe=False)
+        return Response(serializeds_files.data)
     except Organization.DoesNotExist:
         return Response("Organization does not exist", status=status.HTTP_404_NOT_FOUND)
 
@@ -67,7 +65,7 @@ def get_files(request, organization_id):
 def get_organizations(request):
     organizations = Organization.objects.all()
     serializeds_documents = OrganizationSerializer(organizations, many=True)
-    return JsonResponse(serializeds_documents.data, safe=False)
+    return Response(serializeds_documents.data)
 
 
 @api_view(["GET"])
@@ -75,7 +73,7 @@ def get_organizations(request):
 def get_users(request):
     users = User.objects.all()
     serializeds_users = UserSerializer(users, many=True)
-    return JsonResponse(serializeds_users.data, safe=False)
+    return Response(serializeds_users.data)
 
 
 @api_view(["GET"])
@@ -87,7 +85,7 @@ def get_user_downloads(request, user_id):
         serializeds_download_logs = IconicFileDownloadLogSerializer(
             download_logs, many=True
         )
-        return JsonResponse(serializeds_download_logs.data, safe=False)
+        return Response(serializeds_download_logs.data)
     except User.DoesNotExist:
         return Response("User id does not exist", status=status.HTTP_404_NOT_FOUND)
 
