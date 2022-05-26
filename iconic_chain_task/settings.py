@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "iconic_chain_task.api",
     "rest_framework",
     "rest_framework.authtoken",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [

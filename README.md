@@ -23,8 +23,8 @@ goto in your browser:
 http://0.0.0.0:8090/admin/
 
 
-### test the api , please using login first in order to get the token
+### check the API docs
 
 goto in your browser:
 
-http://0.0.0.0:8090/api/login
+http://0.0.0.0:8090/
