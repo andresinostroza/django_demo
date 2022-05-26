@@ -9,10 +9,10 @@ DJANGO_SUPERUSER_EMAIL=<your-admin-email>
 DJANGO_SUPERUSER_PASSWORD=<your-admin-password>
 
 This is necessary in order to create new users and organizations using the admin django CRUD
-### run docker build and run using our lovely
+### run docker build and run in detached mode using our lovely
 
 ```
-docker-compose up
+docker-compose up -d
 
 ```
 
@@ -21,3 +21,10 @@ docker-compose up
 goto in your browser:
 
 http://0.0.0.0:8090/admin/
+
+
+### test the api , please using login first in order to get the token
+
+goto in your browser:
+
+http://0.0.0.0:8090/api/login
