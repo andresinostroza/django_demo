@@ -11,11 +11,12 @@ from .organization import Organization
 
 class UserProfileManager(BaseUserManager):
     def create_user(self, email, password=None, organization_id=None):
-        """Create a new user profile"""
         if not email:
             raise ValueError("User must have an email address")
 
-        # TODO Refactor to another function, even a class
+        if not password:
+            raise ValueError("User must set a password")
+
         if not organization_id:
             default_organization = Organization.objects.first()
             if not default_organization:
@@ -26,6 +27,7 @@ class UserProfileManager(BaseUserManager):
                     "the instructions in the README.md file"
                 )
         else:
+            # TODO what if I give a bad org id?
             default_organization = Organization.objects.get(id=organization_id)
 
         email = self.normalize_email(email)

@@ -30,3 +30,10 @@ class OrganizationViewsSetTest(LoginUserTestCaseMixin, APITestCase):
         )
         response = self.client.get(get_organizations_url)
         self.assertEqual(len(response.data), 0)
+
+    def test_get_organization_files_with_no_valid_org(self):
+        get_organizations_url = reverse(
+            "get_organizations_files", args=[self.organization.id + 1]
+        )
+        response = self.client.get(get_organizations_url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
